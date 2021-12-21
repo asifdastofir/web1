@@ -1,0 +1,225 @@
+const currencyHolder = document.getElementById("currency")
+
+const balanceHolder = document.getElementById("balance")
+
+const tnxNameHolder = document.getElementById("name")
+
+const tnxAmountHolder = document.getElementById("amount")
+
+const income = document.getElementById("income")
+
+const expense = document.getElementById("expense")
+
+const saveButton = document.getElementById("save");
+
+const cancelButton = document.getElementById("cancel");
+
+const displayList = document.getElementById("'list_of_transactions");
+
+let symbol = "$";
+let ListOfTransactions = [];
+let currentBalance = 0;
+
+
+let editIndex = -1;
+
+
+
+function edit(i){
+    cancelButton.style.display = "block";
+    editIndex = i;
+    tnxNameHolder.value = ListOfTransactions[i].name;
+    tnxAmountHolder.value = ListOfTransactions[i].amount;
+    if(ListOfTransactions[i].type == "income"){
+        income.checked = true
+    }
+    else{
+    expense.checked = true;
+    }
+    
+
+}
+
+function del(i){
+    ListOfTransaction = ListOfTransactions.
+    filter((e,index) => i !== index)
+    render();
+}
+
+updatePieChart(income, expense);
+
+}
+
+function saveData() {
+    localStorage.getItem("symbol", symbol);
+    let currentBalance = localStorage.getItem("balance", currentBalance);
+    let ListOfTransactions = localStorage.getItem("list", JSON.stringify(ListOfTransactions));
+    
+}
+
+function loadData() {
+    symbol = localStorage.getItem("symbol");;
+    ListOfTransactions = JSON.parse(localStorage.getItem("list"));;
+    currentBalance = Number(localStorage.getItem("balance"));;
+}
+
+function render() {
+    currentBalance = ListOfTransactions.reduce(
+    (total, value) => {
+        return value.type == "expense" ? total
+        - value.amount : total + value.amout
+    }, 0)
+
+    displayList.innerHTML = "";
+
+    if(ListOfTransactions.length == 0){
+        displaylist.innerHTML += "No Transaction found!"   
+    } 
+    else{
+        ListOfTransactions.foreach((e,i) => {
+            displayList.innerHTML += '
+            <li class="transaction ${e.type}">
+                <p>${e.name}</p>
+                <div class=""right_side">
+                    <p>${symbol}${e.amount}</p>
+                    <button onclick="edit(${i})</button>
+                    <button onclick="del(${i})</button>
+
+                     </div>
+                  </li>
+            ';
+    })
+
+    }
+  
+    
+    
+
+    currentHolder.innerHTML = symbol;
+    balanceHolder.innerHTML = currentBalance;
+    saveData():
+
+}    
+
+cancelButton.addEventListener("click", () => {
+    editIndex = -1;
+    tnxNameholder.value = "";
+    tnxAmountholder.value = "";
+    cancelButton.style.display = "none"; 
+})
+
+saveButton.addEventListener("click", () => {
+    if (tnxNameHolder.value == "" || Number
+    (tnxAmountHolder.value) <= 0) {
+        alert(""can't do that!")
+        return; 
+    }                                          
+    
+    
+
+    let transaction = {
+        name: tnxNameHolder.value,
+        amount: Number(tnxAmountHolder.value), 
+        type: income.checked? "income" : "expense"
+        
+   
+    };
+    
+    if(editIndex == -1)ListOfTransaction.push
+    (transaction);
+    
+    else
+         ListOfTransactions[editIndex] = transaction;
+    editIndex = -1;
+    tnxNameholder.value = "";
+    tnxAmountholder.value = "";
+    render();
+    cancelButton.style.display = "none";
+}) 
+
+loadData;
+
+render();
+
+
+#cancel{
+    background-color: #E5415E;
+    display: none;;
+}
+
+#cancel:hover{
+    background-color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
